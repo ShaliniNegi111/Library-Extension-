@@ -1,4 +1,5 @@
 import java.io.File;
+import org.openqa.selenium.chrome.ChromeDriver;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -16,14 +17,25 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
 import ru.sbtqa.tag.parsers.JsonParser; 
 public class Second {
 	
 	public static void main ( String args [ ] )
 	{
 		
-		System.setProperty("webdriver.chrome.driver","/usr/bin/chromedriver");
-		WebDriver driver = new ChromeDriver();
+		
+		
+		 //WebDriverManager.chromedriver().setup();
+		
+		 //ChromeDriverManager.getInstance().setup();
+		 ChromeOptions chromeOptions = new ChromeOptions();
+
+		  chromeOptions.addArguments("--headless");
+		  System.setProperty("webdriver.chrome.driver","/usr/bin/chromedriver");
+		   WebDriver driver = new ChromeDriver(chromeOptions);
+		//WebDriver driver = new ChromeDriver();
 		String url = "http://14.139.108.229/W27/login.aspx?ReturnUrl=%2fw27%2fMyInfo%2fw27MyInfo.aspx" ;
 		driver.get(url);
 		driver.findElement(By.xpath("//*[@id=\"txtUserName\"]")).sendKeys("17477");

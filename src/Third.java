@@ -6,15 +6,15 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Scanner;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import ru.sbtqa.tag.parsers.JsonParser; 
 import org.json.simple.parser.*;
@@ -74,8 +74,8 @@ public class Third  {
 		        {
 		            
 		            JSONObject obj = (JSONObject)parser.parse(new FileReader("./data.json"));
-		            name = obj.getString("USERNAME");
-					password = obj.getString("PASSWORD");
+		            name = (String)obj.get("USERNAME");
+					password = ( String)  obj.get("PASSWORD");
 					reader.close();
 		 
 		        } 
@@ -139,13 +139,13 @@ public class Third  {
 		   }
 		   for (  String s :  BookName )
 				 System.out.println( s ) ;
-		  /* ArrayList < String > Button  = new ArrayList <String >(); 
+		  ArrayList < WebElement  > Button  = new ArrayList <WebElement >(); 
 		   for ( int i = 0 ; i < tot ; i ++ )
 			{ 
 			     String css = "#ctl00_ContentPlaceHolder1_CtlMyLoans1_grdLoans_ctl0"+(i+2)+"_Button1";
 				 ArrayList < WebElement > d  = (ArrayList<WebElement>) driver.findElements(By.cssSelector( css ));
-			     Button.addAll( (Collection<? extends String>) d.get(0)) ;
-			}*/
+			    Button.add(d.get(0) );
+			}
 			/*for (  String s :  Button)
 				 	System.out.println( s ) ;*/
 			String date = LocalDate.now().toString();
@@ -154,28 +154,29 @@ public class Third  {
 			{
 				for ( int i = 0 ; i < tot ; i ++ )
 				{
-					System.out.println( "Book no:-"+ i+1 + " ");
+					System.out.println( "Book no:-"+ (i+1) + " ");
 					System.out.print( "Due date is:-" );
 					String[] d = due_date .get(i).split("-"); 
 					System.out.println ( d [ 0 ] + d [ 1 ] + d [ 2 ] ) ;
-					int year = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(date)).getYear();
-					int month = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(date)).getYear();
-					int day = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(date)).getYear();
+					LocalDateTime now = LocalDateTime.now() ;
+					int year = now.getYear();
+					int month = now.getMonthValue();
+					int day = now.getDayOfMonth();
 					if ( d [ 2 ] == Integer.toString(year))
 					{
 						if ( d [ 1 ] ==  months [ month ] )
 						{
 							if ( d [ 0 ] == Integer.toString(day))
 							{
-								/*if ()
+								if (Button.get(i).isEnabled())
 								{
-									
+									Button.get(i).click();
 								}
 								else 
 								{
 									 System.out.println ( "RETURN NEEDED !!!");
-				                 System.out.println ( "You need to return " +  BookName.get( i ) + " today. ") ;
-								}*/
+				                     System.out.println ( "You need to return " +  BookName.get( i ) + " today. ") ;
+								}
 							}
 						} 
 					}
